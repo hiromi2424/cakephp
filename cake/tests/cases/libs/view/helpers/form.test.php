@@ -2505,6 +2505,32 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
+ * testCheckboxDefaultValue method
+ *
+ * Test default value setting on checkbox() method
+ *
+ * @access public
+ * @return void
+ */
+	function testCheckboxDefaultValue() {
+		$this->Form->data['Model']['field'] = false;
+		$result = $this->Form->checkbox('Model.field', array('default' => true, 'hiddenField' => false));
+		$this->assertTags($result, array('input' => array('type' => 'checkbox', 'name' => 'data[Model][field]', 'value' => '1', 'id' => 'ModelField')));
+
+		unset($this->Form->data['Model']['field']);
+		$result = $this->Form->checkbox('Model.field', array('default' => true, 'hiddenField' => false));
+		$this->assertTags($result, array('input' => array('type' => 'checkbox', 'name' => 'data[Model][field]', 'value' => '1', 'id' => 'ModelField', 'checked' => 'checked')));
+
+		$this->Form->data['Model']['field'] = true;
+		$result = $this->Form->checkbox('Model.field', array('default' => false, 'hiddenField' => false));
+		$this->assertTags($result, array('input' => array('type' => 'checkbox', 'name' => 'data[Model][field]', 'value' => '1', 'id' => 'ModelField', 'checked' => 'checked')));
+
+		unset($this->Form->data['Model']['field']);
+		$result = $this->Form->checkbox('Model.field', array('default' => false, 'hiddenField' => false));
+		$this->assertTags($result, array('input' => array('type' => 'checkbox', 'name' => 'data[Model][field]', 'value' => '1', 'id' => 'ModelField')));
+	}
+
+/**
  * testError method
  *
  * Test field error generation
